@@ -1,2 +1,13 @@
-# support-ticket-api
-RESTful API for enterprise-style support ticket management, built with Laravel, PostgreSQL, and Docker.
+# Support Ticket API
+
+RESTful API for enterprise-style support ticket management.
+
+## Tech Stack
+
+* Laravel
+* PostgreSQL
+* Docker
+
+## Status
+
+Project in development.
