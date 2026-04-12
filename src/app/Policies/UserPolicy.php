@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use app\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -20,7 +21,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return false;
+        return $user->role === UserRole::CLIENT;
     }
 
     /**
