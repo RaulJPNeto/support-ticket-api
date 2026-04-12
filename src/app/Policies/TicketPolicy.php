@@ -5,7 +5,6 @@ namespace App\Policies;
 use app\Enums\UserRole;
 use App\Models\Ticket;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TicketPolicy
 {
@@ -51,6 +50,18 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): bool
     {
+        if ($user->role === UserRole::ADMIN) {
+            return true;
+        }
+
+        if ($user->role === UserRole::CLIENT) {
+            return $ticket->client_id === $user->id;
+        }
+
+        if ($user->role === UserRole::AGENT) {
+            return $ticket->assigned_agent_id === $user->id;
+        }
+
         return false;
     }
 
@@ -59,7 +70,7 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket): bool
     {
-        return false;
+        return $user->role === UserRole::ADMIN;
     }
 
     /**
