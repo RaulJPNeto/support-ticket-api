@@ -147,6 +147,41 @@ docker compose exec app php artisan migrate:fresh --seed
 
 ---
 
+## Commit Convention
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org/).
+
+### Format
+
+```
+<type>: <short description>
+```
+
+### Types
+
+| Type | When to use |
+|---|---|
+| `feat` | New feature or endpoint |
+| `fix` | Bug fix |
+| `refactor` | Code change that is not a fix or feature |
+| `chore` | Config, dependencies, tooling |
+| `docs` | Documentation only |
+| `test` | Adding or updating tests |
+| `style` | Formatting, missing semicolons, etc. |
+
+### Examples
+
+```
+feat: add ticket status history tracking
+fix: rename suport_level to support_level
+refactor: extract ticket filters into query layer
+chore: update gitignore and readme
+docs: add swagger documentation for ticket endpoints
+test: add unit tests for ticket service
+```
+
+---
+
 ## Project Status
 
 ```
