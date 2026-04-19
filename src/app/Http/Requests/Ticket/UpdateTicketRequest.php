@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Ticket;
 
+use App\Enums\TicketCategory;
 use app\Enums\TicketPriority;
 use app\Enums\TicketStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -26,10 +27,11 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['sometimes', 'string', 'max:255'],
             'description' => ['sometimes', 'string'],
-            'priority' => ['sometimes', new Enum(TicketPriority::class)],
             'status' => ['sometimes', new Enum(TicketStatus::class)],
+            'priority' => ['sometimes', new Enum(TicketPriority::class)],
+            'category' => ['sometimes', new Enum(TicketCategory::class)],
         ];
     }
 }

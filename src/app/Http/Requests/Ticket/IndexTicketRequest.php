@@ -27,9 +27,9 @@ class IndexTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', new Enum(TicketStatus::class)],
-            'priority' => ['required', new Enum(TicketPriority::class)],
-            'category' => ['required', new Enum(TicketCategory::class)],
+            'status' => ['sometimes', new Enum(TicketStatus::class)],
+            'priority' => ['sometimes', new Enum(TicketPriority::class)],
+            'category' => ['sometimes', new Enum(TicketCategory::class)],
             'search' => ['sometimes', 'string', 'max:255'],
         ];
     }
