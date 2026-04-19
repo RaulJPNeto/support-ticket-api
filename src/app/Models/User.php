@@ -19,7 +19,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'suport_level',
+        'support_level',
     ];
 
     protected $hidden = [
@@ -33,7 +33,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => UserRole::class,
-            'suport_level' => SupportLevel::class,
+            'support_level' => SupportLevel::class,
         ];
     }
 
