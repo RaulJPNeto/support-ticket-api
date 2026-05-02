@@ -30,7 +30,6 @@ class TicketController extends Controller
 
     public function index(IndexTicketRequest $request, TicketQuery $ticketQuery)
     {
-
         $query = $ticketQuery->handle(
             $request->user(),
             $request->validated()
@@ -66,6 +65,7 @@ class TicketController extends Controller
         $ticket = $this->ticketService->update(
             $ticket,
             $request->validated(),
+            $request->user()
         );
 
         return new TicketResource($ticket);
@@ -78,6 +78,27 @@ class TicketController extends Controller
         $this->ticketService->delete($ticket);
 
         return response()->noContent();
+    }
 
+    public function restore(Ticket $withTrash, int $id): TicketResource
+    {
+        $ticket = Ticket::withTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $ticket);
+
+        $ticket = $this->ticketService->restore($ticket);
+
+        return new TicketResource($ticket);
+    }
+
+    public function forceDelet(int $id)
+    {
+        $ticket = Ticket::withTrashed()->findOrFail($id);
+
+        $this->authorize('forceDelete', $ticket);
+
+        $this->ticketService->forceDelete($ticket);
+
+        return response()->noContent();
     }
 }

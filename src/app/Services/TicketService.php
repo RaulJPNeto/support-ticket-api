@@ -19,7 +19,7 @@ class TicketService
             'status' => TicketStatus::OPEN,
             'priority' => TicketPriority::from($data['priority']),
             'category' => TicketCategory::from($data['category']),
-            'client_id' =>$user->id,
+            'client_id' => $user->id,
         ]);
     }
 
@@ -57,5 +57,17 @@ class TicketService
     public function delete(Ticket $ticket)
     {
         $ticket->delete();
+    }
+
+    public function restore(Ticket $ticket): Ticket
+    {
+        $ticket->restore();
+
+        return $ticket->refresh();
+    }
+
+    public function forceDelete(Ticket $ticket): void
+    {
+        $ticket->forceDelete();
     }
 }

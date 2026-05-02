@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/tests/Unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/storage/app" />
       <excludeFolder url="file://$MODULE_DIR$/src/storage/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/src/storage/api-docs" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -12,16 +12,28 @@ class TicketDocs
         tags: ['Ticket'],
         security: [['bearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'status', in: 'query', required: false,
+            new OA\Parameter(
+                name: 'status',
+                in: 'query',
+                required: false,
                 schema: new OA\Schema(type: 'string', enum: ['OPEN', 'IN_PROGRESS', 'WAITING_CUSTOMER', 'RESOLVED', 'CLOSED', 'CANCELLED'])
             ),
-            new OA\Parameter(name: 'priority', in: 'query', required: false,
+            new OA\Parameter(
+                name: 'priority',
+                in: 'query',
+                required: false,
                 schema: new OA\Schema(type: 'string', enum: ['LOW', 'MEDIUM', 'HIGH', 'URGENT'])
             ),
-            new OA\Parameter(name: 'category', in: 'query', required: false,
+            new OA\Parameter(
+                name: 'category',
+                in: 'query',
+                required: false,
                 schema: new OA\Schema(type: 'string', enum: ['INCIDENT', 'ACCESS', 'BUG', 'FEATURE_REQUEST', 'INFRASTRUCTURE', 'OTHER'])
             ),
-            new OA\Parameter(name: 'search', in: 'query', required: false,
+            new OA\Parameter(
+                name: 'search',
+                in: 'query',
+                required: false,
                 schema: new OA\Schema(type: 'string', example: 'erro no login')
             ),
         ],
@@ -38,7 +50,10 @@ class TicketDocs
         tags: ['Ticket'],
         security: [['bearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'ticket', in: 'path', required: true,
+            new OA\Parameter(
+                name: 'ticket',
+                in: 'path',
+                required: true,
                 schema: new OA\Schema(type: 'integer', example: 1)
             ),
         ],
@@ -83,7 +98,10 @@ class TicketDocs
         tags: ['Ticket'],
         security: [['bearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'ticket', in: 'path', required: true,
+            new OA\Parameter(
+                name: 'ticket',
+                in: 'path',
+                required: true,
                 schema: new OA\Schema(type: 'integer', example: 1)
             ),
         ],
@@ -115,7 +133,10 @@ class TicketDocs
         tags: ['Ticket'],
         security: [['bearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'ticket', in: 'path', required: true,
+            new OA\Parameter(
+                name: 'ticket',
+                in: 'path',
+                required: true,
                 schema: new OA\Schema(type: 'integer', example: 1)
             ),
         ],
@@ -127,4 +148,48 @@ class TicketDocs
         ]
     )]
     public function destroy() {}
+
+    #[OA\Post(
+        path: '/api/tickets/{ticket}/restore',
+        summary: 'Restaurar Ticket deletado',
+        tags: ['Ticket'],
+        security: [['bearerAuth' => []]],
+        parameters: [
+            new OA\Parameter(
+                name: 'ticket',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer', example: 1)
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Ticket restaurado com sucesso'),
+            new OA\Response(response: 401, description: 'Não autenticado'),
+            new OA\Response(response: 403, description: 'Sem permissão — apenas Admin'),
+            new OA\Response(response: 404, description: 'Ticket não encontrado'),
+        ]
+    )]
+    public function restore() {}
+
+    #[OA\Delete(
+        path: '/api/tickets/{ticket}/force-delete',
+        summary: 'Deletar Ticket permanentemente',
+        tags: ['Ticket'],
+        security: [['bearerAuth' => []]],
+        parameters: [
+            new OA\Parameter(
+                name: 'ticket',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer', example: 1)
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 204, description: 'Ticket deletado permanentemente'),
+            new OA\Response(response: 401, description: 'Não autenticado'),
+            new OA\Response(response: 403, description: 'Sem permissão — apenas Admin'),
+            new OA\Response(response: 404, description: 'Ticket não encontrado'),
+        ]
+    )]
+    public function forceDelete() {}
 }
