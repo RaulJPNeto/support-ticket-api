@@ -12,6 +12,8 @@ RESTful API for enterprise-style support ticket management, built with Laravel a
 - **Laravel Sanctum** — token-based authentication
 - **Swagger / OpenAPI** — API documentation
 - **Mailtrap** — email testing in development
+- **Laravel Pint** — code formatting
+- **Larastan** — static analysis
 
 ---
 
@@ -177,14 +179,50 @@ MAIL_FROM_NAME="Support Ticket"
 ## Development
 
 ```bash
+# Format code
+docker compose exec app composer pint
+
+# Check formatting without applying
+docker compose exec app composer pint:test
+
+# Run static analysis
+docker compose exec app composer stan
+
+# Format + analyse
+docker compose exec app composer check
+
 # Generate Swagger docs
 docker compose exec app php artisan l5-swagger:generate
 
 # Generate Swagger docs file for a new controller
 docker compose exec app php artisan make:swagger ExampleController
 
+# Run all tests
+docker compose exec app php artisan test
+
 # Run migrations fresh with seed
 docker compose exec app php artisan migrate:fresh --seed
+```
+
+---
+
+## Testing
+
+The project has feature tests covering authentication and ticket management:
+
+```
+tests/
+└── Feature/
+    ├── Auth/
+    │   └── AuthTest.php     — register, login, logout, me
+    └── Tickets/
+        └── TicketTest.php   — CRUD, policies, status history, soft delete
+```
+
+Run all tests:
+
+```bash
+docker compose exec app php artisan test
 ```
 
 ---
@@ -219,7 +257,7 @@ fix: rename suport_level to support_level
 refactor: extract ticket filters into query layer
 chore: update gitignore and readme
 docs: add swagger documentation for ticket endpoints
-test: add unit tests for ticket service
+test: add feature tests for auth and tickets
 ```
 
 ---
@@ -235,5 +273,7 @@ test: add unit tests for ticket service
 ✅ Ticket status history
 ✅ Soft delete (restore + force delete)
 ✅ Events & email notifications
-⬜ Automated tests
+✅ Code formatting (Pint)
+✅ Static analysis (Larastan)
+✅ Automated tests
 ```
