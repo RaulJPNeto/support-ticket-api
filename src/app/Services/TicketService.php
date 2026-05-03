@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Enums\TicketCategory;
 use app\Enums\TicketPriority;
 use app\Enums\TicketStatus;
+use App\Events\TicketDeleted;
+use App\Events\TicketStatusChanged;
 use App\Models\Ticket;
 use App\Models\TicketStatusHistory;
 use App\Models\User;
@@ -49,14 +51,18 @@ class TicketService
                 'from_status' => $oldStatus,
                 'to_status' => $newStatus,
             ]);
+
+            TicketStatusChanged::dispatch($ticket, $oldStatus, $newStatus, $user);
         }
 
         return $ticket->fresh();
     }
 
-    public function delete(Ticket $ticket)
+    public function delete(Ticket $ticket, User $user): void
     {
         $ticket->delete();
+
+        TicketDeleted::dispatch($ticket, $user);
     }
 
     public function restore(Ticket $ticket): Ticket

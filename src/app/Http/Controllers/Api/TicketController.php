@@ -71,11 +71,11 @@ class TicketController extends Controller
         return new TicketResource($ticket);
     }
 
-    public function destroy(Ticket $ticket)
+    public function destroy(Request $request, Ticket $ticket)
     {
         $this->authorize('delete', $ticket);
 
-        $this->ticketService->delete($ticket);
+        $this->ticketService->delete($ticket, $request->user());
 
         return response()->noContent();
     }
