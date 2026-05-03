@@ -21,15 +21,15 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket): bool
     {
-        if($user->role === UserRole::ADMIN){
+        if ($user->role === UserRole::ADMIN) {
             return true;
         }
 
-        if($user->role === UserRole::CLIENT){
+        if ($user->role === UserRole::CLIENT) {
             return $ticket->client_id === $user->id;
         }
 
-        if($user->role === UserRole::AGENT){
+        if ($user->role === UserRole::AGENT) {
             return $ticket->assigned_agent_id === null
                 || $ticket->assigned_agent_id === $user->id;
         }
@@ -70,9 +70,10 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket): bool
     {
-        if($ticket->trashed()){
+        if ($ticket->trashed()) {
             return false;
         }
+
         return $user->role === UserRole::ADMIN;
     }
 

@@ -34,6 +34,7 @@ class Ticket extends Model
         ];
     }
 
+    /** @return BelongsTo<User, Ticket> */
     public function client(): BelongsTo
     {
         return $this->belongsTo(User::class, 'client_id');

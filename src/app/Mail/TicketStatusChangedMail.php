@@ -2,15 +2,14 @@
 
 namespace App\Mail;
 
+use App\Enums\TicketStatus;
+use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Ticket;
-use App\Enums\TicketStatus;
 
 class TicketStatusChangedMail extends Mailable
 {
