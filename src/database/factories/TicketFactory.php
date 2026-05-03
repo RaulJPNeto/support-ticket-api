@@ -17,13 +17,13 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'               => fake()->sentence(6),
-            'description'         => fake()->paragraph(3),
-            'status'              => fake()->randomElement(TicketStatus::cases()),
-            'priority'            => fake()->randomElement(TicketPriority::cases()),
-            'category'            => fake()->randomElement(TicketCategory::cases()),
-            'client_id'           => User::factory()->client(),
-            'assigned_agent_id'   => null,
+            'title' => fake()->sentence(6),
+            'description' => fake()->paragraph(3),
+            'status' => fake()->randomElement(TicketStatus::cases()),
+            'priority' => fake()->randomElement(TicketPriority::cases()),
+            'category' => fake()->randomElement(TicketCategory::cases()),
+            'client_id' => User::factory()->client(),
+            'assigned_agent_id' => null,
         ];
     }
 
@@ -42,7 +42,7 @@ class TicketFactory extends Factory
     public function inProgress(User $agent): static
     {
         return $this->state([
-            'status'            => TicketStatus::IN_PROGRESS,
+            'status' => TicketStatus::IN_PROGRESS,
             'assigned_agent_id' => $agent->id,
         ]);
     }

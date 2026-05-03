@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\TicketDeleted;
 use App\Mail\TicketDeletedMail;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
 class NotifyClientDeleted

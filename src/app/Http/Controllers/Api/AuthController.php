@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct(protected AuthService $authService)
-    {}
+    public function __construct(protected AuthService $authService) {}
 
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -33,7 +32,7 @@ class AuthController extends Controller
         $this->authService->logout($request->user());
 
         return response()->json([
-            'message' => 'Logout realizado com sucesso!'
+            'message' => 'Logout realizado com sucesso!',
         ]);
     }
 
@@ -41,5 +40,4 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
-
 }

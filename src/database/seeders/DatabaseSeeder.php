@@ -2,15 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Ticket;
 use App\Models\TicketComment;
-use App\Enums\UserRole;
-use App\Enums\SupportLevel;
-use App\Enums\TicketStatus;
-use App\Enums\TicketPriority;
-use App\Enums\TicketCategory;
-use App\Enums\CommentVisibility;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         // Usuários fixos para usar no Bruno
         $admin = User::factory()->admin()->create([
-            'name'  => 'Admin User',
+            'name' => 'Admin User',
             'email' => 'admin@test.com',
         ]);
 
@@ -59,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 ->public()
                 ->create([
                     'ticket_id' => $ticket->id,
-                    'user_id'   => $ticket->client_id,
+                    'user_id' => $ticket->client_id,
                 ]);
 
             // Comentário interno do agente (se tiver agente)
@@ -68,7 +62,7 @@ class DatabaseSeeder extends Seeder
                     ->internal()
                     ->create([
                         'ticket_id' => $ticket->id,
-                        'user_id'   => $ticket->assigned_agent_id,
+                        'user_id' => $ticket->assigned_agent_id,
                     ]);
             }
         }

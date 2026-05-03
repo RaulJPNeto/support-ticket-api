@@ -36,6 +36,7 @@ class TicketService
         $ticket->update([
             'title' => $data['title'] ?? $ticket->title,
             'description' => $data['description'] ?? $ticket->description,
+            'status' => $newStatus ?? $ticket->status,
             'priority' => isset($data['priority'])
                 ? TicketPriority::from($data['priority'])
                 : $ticket->priority,

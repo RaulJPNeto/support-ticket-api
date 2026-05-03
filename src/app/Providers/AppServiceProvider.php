@@ -2,20 +2,19 @@
 
 namespace App\Providers;
 
-use App\Models\Ticket;
-use App\Policies\TicketPolicy;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use App\Events\TicketStatusChanged;
 use App\Events\TicketDeleted;
+use App\Events\TicketStatusChanged;
 use App\Listeners\LogStatusChange;
-use App\Listeners\NotifyClientStatus;
 use App\Listeners\LogTicketDeleted;
 use App\Listeners\NotifyClientDeleted;
+use App\Listeners\NotifyClientStatus;
+use App\Models\Ticket;
+use App\Policies\TicketPolicy;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-
     protected $policies = [
         Ticket::class => TicketPolicy::class,
     ];

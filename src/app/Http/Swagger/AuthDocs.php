@@ -3,6 +3,7 @@
 namespace App\Http\Swagger;
 
 use OpenApi\Attributes as OA;
+
 class AuthDocs
 {
     #[OA\Post(

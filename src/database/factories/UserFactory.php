@@ -6,8 +6,6 @@ use app\Enums\SupportLevel;
 use app\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<User>
@@ -17,18 +15,18 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'          => fake()->name(),
-            'email'         => fake()->unique()->safeEmail(),
-            'password'      => 'password',
-            'role'          => UserRole::CLIENT,
-            'support_level'  => null,
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => 'password',
+            'role' => UserRole::CLIENT,
+            'support_level' => null,
         ];
     }
 
     public function client(): static
     {
         return $this->state([
-            'role'         => UserRole::CLIENT,
+            'role' => UserRole::CLIENT,
             'support_level' => null,
         ]);
     }
@@ -37,7 +35,7 @@ class UserFactory extends Factory
     {
 
         return $this->state([
-            'role'         => UserRole::AGENT,
+            'role' => UserRole::AGENT,
             'support_level' => SupportLevel::N2,
         ]);
     }
@@ -45,7 +43,7 @@ class UserFactory extends Factory
     public function admin(): static
     {
         return $this->state([
-            'role'         => UserRole::ADMIN,
+            'role' => UserRole::ADMIN,
             'support_level' => SupportLevel::N3,
         ]);
     }

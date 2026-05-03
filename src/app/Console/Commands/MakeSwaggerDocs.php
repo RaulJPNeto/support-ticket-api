@@ -9,20 +9,22 @@ use Illuminate\Support\Str;
 class MakeSwaggerDocs extends Command
 {
     protected $signature = 'make:swagger {controller : Nome do controller (ex: TicketController)}';
+
     protected $description = 'Gera arquivo de documentação Swagger para um controller';
 
     public function handle(): void
     {
         $controllerName = $this->argument('controller');
-        $baseName       = Str::replaceLast('Controller', '', $controllerName);
-        $tag            = $baseName;
-        $namespace      = "App\\Http\\Swagger";
-        $className      = "{$baseName}Docs";
-        $directory      = app_path("Http/Swagger");
-        $filePath       = "{$directory}/{$className}.php";
+        $baseName = Str::replaceLast('Controller', '', $controllerName);
+        $tag = $baseName;
+        $namespace = 'App\\Http\\Swagger';
+        $className = "{$baseName}Docs";
+        $directory = app_path('Http/Swagger');
+        $filePath = "{$directory}/{$className}.php";
 
         if (file_exists($filePath)) {
             $this->error("Arquivo já existe: {$filePath}");
+
             return;
         }
 
@@ -30,13 +32,14 @@ class MakeSwaggerDocs extends Command
 
         if (empty($routes)) {
             $this->error("Nenhuma rota encontrada para {$controllerName}");
+
             return;
         }
 
         $methods = $this->buildMethods($routes, $tag);
-        $stub    = $this->buildStub($namespace, $className, $methods);
+        $stub = $this->buildStub($namespace, $className, $methods);
 
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             mkdir($directory, 0755, true);
         }
 
@@ -52,14 +55,14 @@ class MakeSwaggerDocs extends Command
         foreach (Route::getRoutes() as $route) {
             $action = $route->getActionName();
 
-            if (!Str::contains($action, $controllerName)) {
+            if (! Str::contains($action, $controllerName)) {
                 continue;
             }
 
-            $method     = strtoupper($route->methods()[0]);
-            $uri        = '/' . $route->uri();
+            $method = strtoupper($route->methods()[0]);
+            $uri = '/'.$route->uri();
             $actionName = Str::afterLast($action, '@');
-            $protected  = in_array('auth:sanctum', $route->gatherMiddleware());
+            $protected = in_array('auth:sanctum', $route->gatherMiddleware());
 
             $routes[] = compact('method', 'uri', 'actionName', 'protected');
         }
@@ -80,14 +83,14 @@ class MakeSwaggerDocs extends Command
 
     private function buildMethod(array $route, string $tag): string
     {
-        $httpMethod  = Str::ucfirst(strtolower($route['method']));
-        $attribute   = "OA\\{$httpMethod}";
-        $path        = $route['uri'];
-        $action      = $route['actionName'];
-        $security    = $route['protected'] ? "\n        security: [['bearerAuth' => []]]," : '';
-        $hasBody     = in_array($route['method'], ['POST', 'PUT', 'PATCH']);
+        $httpMethod = Str::ucfirst(strtolower($route['method']));
+        $attribute = "OA\\{$httpMethod}";
+        $path = $route['uri'];
+        $action = $route['actionName'];
+        $security = $route['protected'] ? "\n        security: [['bearerAuth' => []]]," : '';
+        $hasBody = in_array($route['method'], ['POST', 'PUT', 'PATCH']);
         $requestBody = $hasBody ? $this->buildRequestBody() : '';
-        $summary     = $this->resolveSummary($action, $tag);
+        $summary = $this->resolveSummary($action, $tag);
 
         return <<<PHP
 
@@ -108,7 +111,7 @@ PHP;
 
     private function buildRequestBody(): string
     {
-        return "
+        return '
         requestBody: new OA\\RequestBody(
             required: true,
             content: new OA\\JsonContent(
@@ -116,18 +119,18 @@ PHP;
                     // TODO: adicionar propriedades
                 ]
             )
-        ),";
+        ),';
     }
 
     private function resolveSummary(string $action, string $tag): string
     {
         return match ($action) {
-            'index'   => "Listar {$tag}s",
-            'show'    => "Buscar {$tag} por ID",
-            'store'   => "Criar {$tag}",
-            'update'  => "Atualizar {$tag}",
+            'index' => "Listar {$tag}s",
+            'show' => "Buscar {$tag} por ID",
+            'store' => "Criar {$tag}",
+            'update' => "Atualizar {$tag}",
             'destroy' => "Deletar {$tag}",
-            default   => Str::headline($action),
+            default => Str::headline($action),
         };
     }
 

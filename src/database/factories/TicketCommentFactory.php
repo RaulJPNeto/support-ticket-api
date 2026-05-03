@@ -16,9 +16,9 @@ class TicketCommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'ticket_id'  => Ticket::factory(),
-            'user_id'    => User::factory(),
-            'content'    => fake()->paragraph(2),
+            'ticket_id' => Ticket::factory(),
+            'user_id' => User::factory(),
+            'content' => fake()->paragraph(2),
             'visibility' => fake()->randomElement(CommentVisibility::cases()),
         ];
     }

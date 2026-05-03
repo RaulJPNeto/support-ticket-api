@@ -20,7 +20,4 @@ use OpenApi\Attributes as OA;
     description: 'Local Development Server',
 )]
 
-class SwaggerController
-{
-
-}
+class SwaggerController {}
