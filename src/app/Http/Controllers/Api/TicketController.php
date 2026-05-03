@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\TicketCategory;
-use app\Enums\TicketPriority;
-use app\Enums\TicketStatus;
-use app\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\IndexTicketRequest;
 use App\Http\Requests\Ticket\StoreTicketRequest;
@@ -20,13 +16,13 @@ use Illuminate\Http\Request;
 class TicketController extends Controller
 {
     use AuthorizesRequests;
+
     protected $ticketService;
 
     public function __construct(TicketService $ticketService)
     {
         $this->ticketService = $ticketService;
     }
-
 
     public function index(IndexTicketRequest $request, TicketQuery $ticketQuery)
     {
@@ -41,7 +37,7 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
-        $this->authorize('view', Ticket::class);
+        $this->authorize('view', $ticket);
 
         return new TicketResource($ticket);
     }
@@ -60,7 +56,7 @@ class TicketController extends Controller
 
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        $this->authorize('update', Ticket::class);
+        $this->authorize('update', $ticket);
 
         $ticket = $this->ticketService->update(
             $ticket,
@@ -91,7 +87,7 @@ class TicketController extends Controller
         return new TicketResource($ticket);
     }
 
-    public function forceDelet(int $id)
+    public function forceDelete(int $id)
     {
         $ticket = Ticket::withTrashed()->findOrFail($id);
 

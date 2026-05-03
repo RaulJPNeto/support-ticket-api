@@ -4,7 +4,6 @@ namespace App\Http\Requests\Ticket;
 
 use App\Enums\TicketCategory;
 use app\Enums\TicketPriority;
-use app\Enums\TicketStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
@@ -30,7 +29,6 @@ class StoreTicketRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'priority' => ['required', new Enum(TicketPriority::class)],
-            'status' => ['required', new Enum(TicketStatus::class)],
             'category' => ['required', new Enum(TicketCategory::class)],
         ];
     }
